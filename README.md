@@ -11,6 +11,7 @@
 </p>
 
 <p align="center">
+  
   [![Build Status](https://github.com/System00-Security/HayaGuard/actions/workflows/build-release.yml/badge.svg)](https://github.com/System00-Security/HayaGuard/actions)
   [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
   [![Android](https://img.shields.io/badge/Android-8.0%2B-green.svg)](https://android.com)
