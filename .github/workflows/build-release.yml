@@ -28,38 +28,75 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Build Release APK
+      - name: Build Release APKs
         run: ./gradlew assembleRelease
 
-      - name: Build Debug APK
-        run: ./gradlew assembleDebug
-
-      - name: Get version name
+      - name: Get version info
         id: version
         run: |
           VERSION=$(grep -oP 'versionName = "\K[^"]+' app/build.gradle.kts || echo "1.0.0")
+          VERSION_CODE=$(grep -oP 'versionCode = \K[0-9]+' app/build.gradle.kts || echo "1")
           echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "version_code=$VERSION_CODE" >> $GITHUB_OUTPUT
           echo "date=$(date +'%Y%m%d')" >> $GITHUB_OUTPUT
 
-      - name: Rename APKs
+      - name: Sign APKs
+        uses: r0adkll/sign-android-release@v1
+        id: sign_apks
+        with:
+          releaseDirectory: app/build/outputs/apk/release
+          signingKeyBase64: ${{ secrets.SIGNING_KEY }}
+          alias: ${{ secrets.KEY_ALIAS }}
+          keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
+          keyPassword: ${{ secrets.KEY_PASSWORD }}
+        env:
+          BUILD_TOOLS_VERSION: "34.0.0"
+        continue-on-error: true
+
+      - name: Prepare release APKs
         run: |
           mkdir -p release-apks
-          if [ -f app/build/outputs/apk/release/app-release-unsigned.apk ]; then
-            cp app/build/outputs/apk/release/app-release-unsigned.apk release-apks/HayaGuard-${{ steps.version.outputs.version }}-release.apk
+          VERSION="${{ steps.version.outputs.version }}"
+          
+          if [ "${{ steps.sign_apks.outcome }}" == "success" ]; then
+            for apk in ${{ steps.sign_apks.outputs.signedReleaseFile }}; do
+              if [[ "$apk" == *"universal"* ]]; then
+                cp "$apk" "release-apks/HayaGuard-${VERSION}-universal.apk"
+              elif [[ "$apk" == *"arm64-v8a"* ]]; then
+                cp "$apk" "release-apks/HayaGuard-${VERSION}-arm64-v8a.apk"
+              elif [[ "$apk" == *"armeabi-v7a"* ]]; then
+                cp "$apk" "release-apks/HayaGuard-${VERSION}-armeabi-v7a.apk"
+              elif [[ "$apk" == *"x86_64"* ]]; then
+                cp "$apk" "release-apks/HayaGuard-${VERSION}-x86_64.apk"
+              elif [[ "$apk" == *"x86"* ]]; then
+                cp "$apk" "release-apks/HayaGuard-${VERSION}-x86.apk"
+              fi
+            done
+          else
+            for apk in app/build/outputs/apk/release/*.apk; do
+              filename=$(basename "$apk")
+              if [[ "$filename" == *"universal"* ]]; then
+                cp "$apk" "release-apks/HayaGuard-${VERSION}-universal.apk"
+              elif [[ "$filename" == *"arm64-v8a"* ]]; then
+                cp "$apk" "release-apks/HayaGuard-${VERSION}-arm64-v8a.apk"
+              elif [[ "$filename" == *"armeabi-v7a"* ]]; then
+                cp "$apk" "release-apks/HayaGuard-${VERSION}-armeabi-v7a.apk"
+              elif [[ "$filename" == *"x86_64"* ]]; then
+                cp "$apk" "release-apks/HayaGuard-${VERSION}-x86_64.apk"
+              elif [[ "$filename" == *"x86"* ]] && [[ "$filename" != *"x86_64"* ]]; then
+                cp "$apk" "release-apks/HayaGuard-${VERSION}-x86.apk"
+              fi
+            done
           fi
-          if [ -f app/build/outputs/apk/release/app-release.apk ]; then
-            cp app/build/outputs/apk/release/app-release.apk release-apks/HayaGuard-${{ steps.version.outputs.version }}-release.apk
-          fi
-          if [ -f app/build/outputs/apk/debug/app-debug.apk ]; then
-            cp app/build/outputs/apk/debug/app-debug.apk release-apks/HayaGuard-${{ steps.version.outputs.version }}-debug.apk
-          fi
+          
+          ls -la release-apks/
 
       - name: Upload APK artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: HayaGuard-APKs
+          name: HayaGuard-APKs-${{ steps.version.outputs.version }}
           path: release-apks/*.apk
-          retention-days: 30
+          retention-days: 90
 
       - name: Create Release
         if: startsWith(github.ref, 'refs/tags/v')
@@ -67,6 +104,20 @@ jobs:
         with:
           files: release-apks/*.apk
           generate_release_notes: true
+          body: |
+            ## HayaGuard ${{ steps.version.outputs.version }}
+            
+            ### Download
+            - **Universal APK**: Works on all devices (larger size)
+            - **arm64-v8a**: For modern 64-bit ARM devices (recommended for most phones)
+            - **armeabi-v7a**: For older 32-bit ARM devices
+            - **x86_64**: For 64-bit x86 devices (emulators, some tablets)
+            - **x86**: For 32-bit x86 devices
+            
+            ### Installation
+            1. Download the APK matching your device architecture
+            2. Enable "Install from unknown sources" if prompted
+            3. Install and enjoy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -75,12 +126,22 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           tag_name: latest
-          name: Latest Build
+          name: Latest Build (${{ steps.version.outputs.version }})
           prerelease: true
           files: release-apks/*.apk
           body: |
-            Automated build from main branch
+            ## Automated Build
+            
             Build Date: ${{ steps.version.outputs.date }}
             Version: ${{ steps.version.outputs.version }}
+            
+            ### Download
+            - **Universal APK**: Works on all devices
+            - **arm64-v8a**: For modern 64-bit ARM devices
+            - **armeabi-v7a**: For older 32-bit ARM devices
+            - **x86_64**: For 64-bit x86 devices
+            - **x86**: For 32-bit x86 devices
+            
+            This is an automated pre-release build from the main branch.
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
