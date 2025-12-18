@@ -73,4 +73,6 @@ ehthumbs.db
 
 # Secrets and API keys
 secrets.properties
-*.env
+*.env*.jks
+*.keystore
+keystore_base64.txt
