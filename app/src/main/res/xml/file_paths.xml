@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <!-- For camera captures stored in app's private cache directory -->
+    <cache-path
+        name="camera_cache"
+        path="camera/" />
+    
+    <!-- For camera captures stored in external cache -->
+    <external-cache-path
+        name="camera_external"
+        path="camera/" />
+    
+    <!-- For files stored in app's private files directory -->
+    <files-path
+        name="files"
+        path="." />
+    
+    <!-- For external files directory -->
+    <external-files-path
+        name="external_files"
+        path="." />
+</paths>
