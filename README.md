@@ -1,10 +1,24 @@
 # HayaGuard
 
-[![Build Status](https://github.com/System00-Security/HayaGuard/actions/workflows/build-release.yml/badge.svg)](https://github.com/System00-Security/HayaGuard/actions)
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-[![Android](https://img.shields.io/badge/Android-8.0%2B-green.svg)](https://android.com)
+<p align="center">
+  <img src="assets/logo.svg" width="120" alt="HayaGuard Logo">
+</p>
 
-Privacy-focused Facebook client with on-device ML content filtering, tracker blocking, and feed analytics.
+<h1 align="center">HayaGuard</h1>
+
+<p align="center">
+  Privacy-focused Facebook client with on-device ML content filtering
+</p>
+
+<p align="center">
+  [![Build Status](https://github.com/System00-Security/HayaGuard/actions/workflows/build-release.yml/badge.svg)](https://github.com/System00-Security/HayaGuard/actions)
+  [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+  [![Android](https://img.shields.io/badge/Android-8.0%2B-green.svg)](https://android.com)
+</p>
+
+---
+
+HayaGuard is a privacy-focused Facebook client for Android that gives you complete control over your social media experience. It uses on-device machine learning to filter inappropriate content, block trackers, and provide transparency into your feed composition without sending any data to external servers.
 
 ## Screenshots
 
