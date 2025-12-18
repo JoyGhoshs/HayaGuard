@@ -11,9 +11,9 @@
 
 <p align="center">
   <a href="#features">Features</a> |
+  <a href="#download">Download</a> |
   <a href="#installation">Installation</a> |
-  <a href="#architecture">Architecture</a> |
-  <a href="#privacy">Privacy</a> |
+  <a href="#contributing">Contributing</a> |
   <a href="#license">License</a>
 </p>
 
@@ -27,6 +27,22 @@ HayaGuard is a privacy-focused Facebook client for Android that gives you comple
 |-------------|---------|
 | Minimum SDK | Android 8.0 (API 26) |
 | Target SDK | Android 15 (API 36) |
+
+---
+
+## Download
+
+Download the latest APK from [GitHub Releases](https://github.com/System00-Security/HayaGuard/releases/latest).
+
+| APK Variant | Description |
+|-------------|-------------|
+| universal | Works on all devices (larger file size) |
+| arm64-v8a | For modern 64-bit ARM devices (recommended for most phones) |
+| armeabi-v7a | For older 32-bit ARM devices |
+| x86_64 | For 64-bit x86 devices and emulators |
+| x86 | For 32-bit x86 devices |
+
+To install, download the APK matching your device architecture, enable installation from unknown sources when prompted, and install.
 
 ---
 
@@ -275,6 +291,40 @@ app/src/main/java/com/hayaguard/app/
 | Haya Mode | Disabled | Face blur filter |
 | User Gender | Male | For Haya Mode |
 | Quick Lens | Enabled | Long-press OCR |
+
+---
+
+## Contributing
+
+Contributions are welcome and appreciated. Here are ways you can help:
+
+### Reporting Issues
+
+If you find a bug or have a feature request, please open an issue on GitHub with a clear description and steps to reproduce.
+
+### Submitting Pull Requests
+
+1. Fork the repository
+2. Create a feature branch from main
+3. Make your changes with clear commit messages
+4. Test your changes thoroughly
+5. Submit a pull request with a description of your changes
+
+### Areas for Contribution
+
+- Improving ML model accuracy and performance
+- Adding support for additional languages in Feed DNA
+- Enhancing accessibility features
+- Writing documentation and tutorials
+- Testing on different devices and Android versions
+- Translating the app to other languages
+
+### Code Style
+
+- Follow Kotlin coding conventions
+- Use meaningful variable and function names
+- Keep functions focused and concise
+- Add appropriate error handling
 
 ---
 
