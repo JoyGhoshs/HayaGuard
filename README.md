@@ -93,7 +93,7 @@ Contributions are welcome. Please open an issue or submit a pull request.
 
 ## License
 
-Copyright (C) 2025 System00 Security
+Copyright (C) 2026 System00 Security
 
 This program is free software licensed under GPL v3. See [LICENSE](LICENSE) for details.
 

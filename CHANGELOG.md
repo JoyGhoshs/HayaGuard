@@ -3,11 +3,14 @@
 ## v1.2 - Gender Classifier & Enhanced Content Pipeline
 
 ### New Features
-- **Gender/Age Classification** - Added ONNX-based gender and age classifier (`GenderClassifier.kt`) for enhanced Haya Mode filtering
-- **Improved Content Filter Pipeline** - Enhanced multi-stage ML pipeline with better accuracy and performance
+- Gender/Age Classification - Added ONNX-based gender and age classifier (GenderClassifier.kt) for enhanced Haya Mode filtering
+- Improved Content Filter Pipeline - Enhanced multi-stage ML pipeline with better accuracy and performance
+- Reel Blocker - Added reel blocker feature with Quran reminder
 
 ### Improvements
-- Performance optimizations across the content filtering stack
+- UI Updates - Changed the overall UI for better user experience
+- Logo and Launch Screen - Changed app logo and launch screen
+- Performance Fixes - Fixed various performance issues and optimized the filtering stack
 - Updated dependencies and SDK targets
 
 ---
