@@ -1,7 +1,7 @@
 # HayaGuard
 
 <p align="center">
-  <img src="assets/logo.svg" width="120" alt="HayaGuard Logo">
+  <img src="hayaguard_logo.svg" width="120" alt="HayaGuard Logo">
 </p>
 
 <h1 align="center">HayaGuard</h1>
